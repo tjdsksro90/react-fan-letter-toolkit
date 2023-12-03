@@ -1,31 +1,44 @@
-import React from "react";
-import {
-  ListImg,
-  ListImgFigure,
-  ListImgWrap,
-  ListLi,
-  ListTextDesc,
-  ListTextTime,
-  ListTextTitle,
-  ListTextWrap,
-  ListUl,
-} from "assets/BasicStyle";
+import * as St from "assets/BasicStyle";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { __getLists } from "redux/modules/listSlice";
 
-function List({ tab, lists, search }) {
+function List({ tab, search }) {
   const navigate = useNavigate();
   const reduxTab = useSelector((state) => state.tab);
 
+  const dispatch = useDispatch();
+
+  const {
+    isLoading,
+    error,
+    lists = [],
+  } = useSelector((state) => {
+    return state.lists;
+  });
+
+  useEffect(() => {
+    dispatch(__getLists({ navigate }));
+  }, []);
+
+  if (isLoading) {
+    return <div style={{ color: "#fff" }}>로딩중...</div>;
+  }
+
+  if (error) {
+    return <div style={{ color: "#fff" }}>{error.message}</div>;
+  }
+
   return (
     <div>
-      <ListUl>
+      <St.ListUl>
         {lists
           .filter((item) => item.writedTo === tab)
           .filter((item) => item.nickname.toLowerCase().includes(search))
           .map((item) => {
             return (
-              <ListLi
+              <St.ListLi
                 key={item.id}
                 color={reduxTab}
                 onClick={() =>
@@ -34,20 +47,24 @@ function List({ tab, lists, search }) {
                   })
                 }
               >
-                <ListImgWrap>
-                  <ListImgFigure>
-                    <ListImg src={`img/${item.img}`} alt="img" />
-                  </ListImgFigure>
-                </ListImgWrap>
-                <ListTextWrap>
-                  <ListTextTitle>{item.nickname}</ListTextTitle>
-                  <ListTextTime>{item.createdAt}</ListTextTime>
-                  <ListTextDesc>{item.content}</ListTextDesc>
-                </ListTextWrap>
-              </ListLi>
+                <St.ListImgWrap>
+                  <St.ListImgFigure>
+                    {item.img === null ? (
+                      <St.ListImg src="img/img-icon-cap.png" alt="img" />
+                    ) : (
+                      <St.ListImg src={`${item.img}`} alt="img" />
+                    )}
+                  </St.ListImgFigure>
+                </St.ListImgWrap>
+                <St.ListTextWrap>
+                  <St.ListTextTitle>{item.nickname}</St.ListTextTitle>
+                  <St.ListTextTime>{item.createdAt}</St.ListTextTime>
+                  <St.ListTextDesc>{item.content}</St.ListTextDesc>
+                </St.ListTextWrap>
+              </St.ListLi>
             );
           })}
-      </ListUl>
+      </St.ListUl>
     </div>
   );
 }

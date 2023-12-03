@@ -1,52 +1,94 @@
-import {
-  FormButton,
-  FormInput,
-  FormSection,
-  FormSelect,
-  FormSpan,
-  FormTextarea,
-  FormWrap,
-} from "assets/BasicStyle";
-import React from "react";
-import { useSelector } from "react-redux";
+import * as St from "assets/BasicStyle";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { __getUser } from "redux/modules/authSlice";
+import { __addList } from "redux/modules/listSlice";
+import character from "../Character";
 
-function Form({
-  submitHandler,
-  changeHandler,
-  nicknameRef,
-  contentRef,
-  character,
-  tab,
-  list,
-}) {
+function Form({ tab }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const reduxTab = useSelector((state) => state.tab);
 
+  const [list, setList] = useState({
+    nickname: "",
+    writedTo: "cap",
+  });
+
+  const changeHandler = (e) => {
+    setList({
+      ...list,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // focus
+  const contentRef = useRef("");
+
+  // tab 선택시 input 포커스
+  useEffect(() => {
+    contentRef.current.focus();
+    setList({
+      ...list,
+      writedTo: tab,
+    });
+  }, [tab]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const today = new Date();
+    console.log(list);
+    dispatch(
+      __addList({
+        createdAt: today.toJSON(),
+        nickname: list.nickname,
+        img: list.img,
+        writedTo: list.writedTo,
+        content: list.content,
+        userId: list.userId,
+      })
+    );
+  };
+
+  // 유저 정보 가져오기
+  useEffect(() => {
+    dispatch(__getUser({ navigate })).then((res) => {
+      console.log(res, "<<<<<<<<<<<<<<<<<<<");
+      // if (res.type === "getUser/rejected") navigate("/login");
+      setList({
+        ...list,
+        nickname: res.payload.nickname,
+        userId: res.payload.id,
+        img: res.payload.avatar,
+      });
+    });
+  }, []);
+
   return (
-    <FormWrap onSubmit={submitHandler}>
-      <FormSection>
+    <St.FormWrap onSubmit={submitHandler}>
+      <St.FormSection>
         <span>
           <label htmlFor="nickname">nickname</label>
         </span>
-        <FormSpan>
-          <FormInput
+        <St.FormSpan>
+          <St.FormInput
             name="nickname"
             id="nickname"
-            ref={nicknameRef}
             type="text"
-            placeholder="Your nickname ( max : 20 )"
             value={list.nickname}
             onChange={changeHandler}
             maxLength={20}
+            disabled
             required
           />
-        </FormSpan>
-      </FormSection>
-      <FormSection>
+        </St.FormSpan>
+      </St.FormSection>
+      <St.FormSection>
         <span>
           <label htmlFor="content">Content</label>
         </span>
-        <FormSpan>
-          <FormTextarea
+        <St.FormSpan>
+          <St.FormTextarea
             name="content"
             id="content"
             ref={contentRef}
@@ -57,15 +99,15 @@ function Form({
             onChange={changeHandler}
             maxLength={100}
             required
-          ></FormTextarea>
-        </FormSpan>
-      </FormSection>
-      <FormSection>
+          ></St.FormTextarea>
+        </St.FormSpan>
+      </St.FormSection>
+      <St.FormSection>
         <span>
           <label htmlFor="writedTo">Who ?</label>
         </span>
-        <FormSpan>
-          <FormSelect
+        <St.FormSpan>
+          <St.FormSelect
             name="writedTo"
             id="writedTo"
             onChange={changeHandler}
@@ -78,15 +120,15 @@ function Form({
                 </option>
               );
             })}
-          </FormSelect>
-        </FormSpan>
-      </FormSection>
+          </St.FormSelect>
+        </St.FormSpan>
+      </St.FormSection>
       <div>
-        <FormButton color={reduxTab} type="submit">
+        <St.FormButton color={reduxTab} type="submit">
           Send
-        </FormButton>
+        </St.FormButton>
       </div>
-    </FormWrap>
+    </St.FormWrap>
   );
 }
 

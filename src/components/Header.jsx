@@ -1,42 +1,30 @@
-import {
-  HeaderBg,
-  HeaderH1,
-  HeaderLi,
-  HeaderUl,
-  blue,
-  red,
-} from "assets/BasicStyle";
-import React, { useEffect } from "react";
-import character from "./Character";
-import { useDispatch, useSelector } from "react-redux";
-// import reduxTab from "redux/modules/tab";
+import { removeCookie } from "api/cookies";
+import * as St from "assets/BasicStyle";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-function Header({ tab, tabHandler }) {
-  // redux 사용하기
-  // store에 접근하여 state 가져오기
-  const reduxTab = useSelector((state) => state.tab);
+function Header() {
+  const navigate = useNavigate();
 
-  console.log(reduxTab);
+  const logoutHandler = () => {
+    removeCookie("accessToken");
+    removeCookie("refreshToken");
+    toast.success("로그아웃 되었습니다");
+    navigate("/login");
+  };
 
   return (
-    <HeaderBg color={reduxTab}>
-      <HeaderH1>Marvel Fan Letter</HeaderH1>
-      <HeaderUl>
-        {character.map((item) => {
-          return (
-            <HeaderLi
-              className={`${item.val === tab ? "active" : ""} ${item.val}`}
-              key={item.val}
-              value={item.val}
-              onClick={() => tabHandler(item.val)}
-              color={reduxTab}
-            >
-              {item.name}
-            </HeaderLi>
-          );
-        })}
-      </HeaderUl>
-    </HeaderBg>
+    <St.HeaderLink>
+      <button type="button" onClick={() => navigate("/")}>
+        HOME
+      </button>
+      <button type="button" onClick={logoutHandler}>
+        로그아웃
+      </button>
+      <button type="button" onClick={() => navigate("/mypage")}>
+        마이페이지
+      </button>
+    </St.HeaderLink>
   );
 }
 

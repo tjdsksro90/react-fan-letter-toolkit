@@ -1,36 +1,31 @@
-import React, { useState } from "react";
-import Header from "components/Header";
 import Container from "components/Container";
-import Footer from "components/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { tabRedux } from "redux/modules/tab";
+import MainTop from "components/MainTop";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Outlet } from "react-router-dom";
+import { __getLogin } from "redux/modules/authSlice";
+import { __tabPatch } from "redux/modules/tabSlice";
 
 function Main() {
+  const dispatch = useDispatch();
   // tab 메뉴 관련
   const [tab, setTab] = useState("cap");
-  // redux 사용하기
-  // dispatch를 사용하기 위한 준비
-  // const dispatch = useDispatch();
-
-  // store에 접근하여 state 가져오기
-  // const tab = useSelector((state) => state.tab);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(__tabPatch("cap"));
+    setTab("cap");
+  }, []);
 
   const tabHandler = (item) => {
-    dispatch({ type: item });
+    dispatch(__tabPatch(item));
     setTab(item);
-    // console.log(item, "item");
-    // console.log(dispatch(tab(item)));
-    // dispatch(tab(item));
+    console.log("여긴가");
   };
 
   return (
     <div>
-      <Header tab={tab} tabHandler={tabHandler} />
+      <Outlet />
+      <MainTop tab={tab} tabHandler={tabHandler} />
       <Container tab={tab} />
-      {/* <Header /> */}
-      {/* <Container /> */}
-      <Footer />
     </div>
   );
 }

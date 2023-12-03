@@ -1,58 +1,56 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import data from "../fakeData.json";
-import styled from "styled-components";
-import {
-  DetailBg,
-  DetailBox,
-  DetailBtn,
-  DetailBtnWrap,
-  DetailContent,
-  DetailH2,
-  DetailHome,
-  DetailImg,
-  DetailImg100,
-  DetailTime,
-  DetailTo,
-  DetailVh,
-} from "assets/BasicStyle";
+import * as St from "assets/BasicStyle";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import data from "../fakeData.json";
+import {
+  __deleteList,
+  __editList,
+  __getDetailList,
+  __getLists,
+} from "redux/modules/listSlice";
+import { toast } from "react-toastify";
+import { __getUser } from "redux/modules/authSlice";
+import Header from "components/Header";
 
 function Detail() {
+  const dispatch = useDispatch();
   const reduxTab = useSelector((state) => state.tab);
   const navigate = useNavigate();
   const param = useParams();
-  // const location = useLocation();
-  // const data = location.state;
-  console.log(param);
-  // 기존 최초 배열
-  const [lists, setLists] = useState(
-    JSON.parse(localStorage.getItem("watched")) || data
-  );
-  // const lists = useSelector((state) => state.lists);
-  const dispatch = useDispatch();
-  // 초기 설정
+
+  // const { detail = "" } = useSelector((state) => {
+  //   return state.lists;
+  // });
+  const [detail, setDetail] = useState("");
+  const [userDetail, setUserDetail] = useState("");
+
+  // useEffect(() => {
+  //   dispatch(__getDetailList(param.id));
+  // }, []);
+
   useEffect(() => {
-    const storedLists = JSON.parse(localStorage.getItem("watched"));
-    if (storedLists) {
-      setLists(storedLists);
-      // dispatch(storedLists);
-      // console.log(dispatch(storedLists));
-    }
+    dispatch(__getUser({ navigate })).then((res) => {
+      console.log(res, "<<<<<<<<<<<<<<<<<<<");
+      setUserDetail(res.payload);
+    });
   }, []);
 
-  // 리스트 변경될 때마다 Local Storage에 저장하는 함수 추가
   useEffect(() => {
-    localStorage.setItem("watched", JSON.stringify(lists));
-  }, [lists]);
+    dispatch(__getDetailList(param.id)).then((res) => {
+      setDetail(res.payload);
+    });
+  }, []);
 
-  // detail
-  const detail = lists.find((item) => item.id === param.id);
-  // detail의 index 찾기
-  const detailIndex = JSON.parse(localStorage.getItem("watched")).findIndex(
-    (item) => item.id === param.id
-  );
+  // useEffect(() => {
+  // if (detail.length <= 0 || detail.length > 1) {
+  //   alert("올바르지 않은 접근입니다. 메인페이지로 이동합니다.");
+  //   navigate("/");
+  // }
+  // }, [detail]);
+
   const [editCheck, setEditCheck] = useState(false);
+  const [desc, setDesc] = useState("");
 
   const editClick = () => {
     setEditCheck(true);
@@ -62,58 +60,57 @@ function Detail() {
     setEditCheck(false);
   };
 
-  const [desc, setDesc] = useState("");
-
   const changeHandler = (e) => {
     setDesc(e.target.value);
   };
 
   const editSubmit = () => {
     if (desc === detail.content) return alert("수정된 부분이 없습니다");
-    // json을 객채화
-    const commentsJSON = JSON.parse(localStorage.getItem("watched"));
-    // 해당 요소 찾아서 수정
-    commentsJSON[detailIndex].content = desc;
-    // 해당 키 지우고 새롭게 입히기
-    localStorage.removeItem("watched");
-    localStorage.setItem("watched", JSON.stringify(commentsJSON));
-    setLists(commentsJSON);
-    // dispatch(listEdit(commentsJSON));
+    dispatch(__editList({ param, desc }));
     setEditCheck(false);
+    dispatch(__getLists());
     navigate("/");
   };
 
   const deleteClick = () => {
     if (window.confirm("삭제하시겠습니까?")) {
-      // json을 객채화
-      const commentsJSON = JSON.parse(localStorage.getItem("watched"));
-      // 해당 요소 찾아서 수정
-      commentsJSON.splice(detailIndex, 1);
-      // 해당 키 지우고 새롭게 입히기
-      localStorage.removeItem("watched");
-      localStorage.setItem("watched", JSON.stringify(commentsJSON));
-      alert("삭제완료");
+      dispatch(__deleteList(param.id));
+      toast.error("삭제완료");
+      dispatch(__getLists());
       navigate("/");
     }
   };
 
+  const checkIfIncludes = () => {
+    return detail.img && detail.img.includes("img/");
+  };
+
+  // const result = detail.img?.property?.contains("img/");
+
   return (
-    <DetailBg color={reduxTab}>
+    <St.DetailBg color={reduxTab}>
+      <Header />
       <Link to="/" style={{ textDecoration: "none" }}>
-        <DetailHome>홈으로</DetailHome>
+        <St.DetailHome>홈으로</St.DetailHome>
       </Link>
-      <DetailVh>
-        <DetailBox>
-          <DetailImg>
-            <DetailImg100 src={`../img/${detail.img}`} alt="img" />
-          </DetailImg>
-          <DetailH2 color={reduxTab}>{detail.nickname}</DetailH2>
-          <DetailTime>{detail.createdAt}</DetailTime>
-          <DetailTo>
+      <St.DetailVh>
+        <St.DetailBox>
+          <St.DetailImg>
+            {detail.img === null ? (
+              <St.DetailImg100 src="../img/img-icon-cap.png" alt="img" />
+            ) : checkIfIncludes() ? (
+              <St.DetailImg100 src={`../${detail.img}`} alt="img" />
+            ) : (
+              <St.DetailImg100 src={`${detail.img}`} alt={detail.img} />
+            )}
+          </St.DetailImg>
+          <St.DetailH2 color={reduxTab}>{detail.nickname}</St.DetailH2>
+          <St.DetailTime>{detail.createdAt}</St.DetailTime>
+          <St.DetailTo>
             To. {detail.writedTo === "cap" ? "Captain America" : "Iron Man"}
-          </DetailTo>
+          </St.DetailTo>
           {editCheck ? (
-            <DetailContent>
+            <St.DetailContent>
               <textarea
                 name="content"
                 id="content"
@@ -121,36 +118,38 @@ function Detail() {
                 rows="10"
                 placeholder="Your Content ( max : 100 )"
                 value={desc}
-                onChange={changeHandler()}
+                onChange={changeHandler}
                 maxLength={100}
                 required
               ></textarea>
-            </DetailContent>
+            </St.DetailContent>
           ) : (
-            <DetailContent>{detail.content}</DetailContent>
+            <St.DetailContent>{detail.content}</St.DetailContent>
           )}
-          {editCheck ? (
-            <DetailBtnWrap>
-              <DetailBtn onClick={editCancel} color={reduxTab}>
-                취소
-              </DetailBtn>
-              <DetailBtn onClick={editSubmit} color={reduxTab}>
-                수정 완료
-              </DetailBtn>
-            </DetailBtnWrap>
-          ) : (
-            <DetailBtnWrap>
-              <DetailBtn onClick={editClick} color={reduxTab}>
-                수정
-              </DetailBtn>
-              <DetailBtn onClick={deleteClick} color={reduxTab}>
-                삭제
-              </DetailBtn>
-            </DetailBtnWrap>
-          )}
-        </DetailBox>
-      </DetailVh>
-    </DetailBg>
+          {detail.userId === userDetail.id ? (
+            editCheck ? (
+              <St.DetailBtnWrap>
+                <St.DetailBtn onClick={editCancel} color={reduxTab}>
+                  취소
+                </St.DetailBtn>
+                <St.DetailBtn onClick={editSubmit} color={reduxTab}>
+                  수정 완료
+                </St.DetailBtn>
+              </St.DetailBtnWrap>
+            ) : (
+              <St.DetailBtnWrap>
+                <St.DetailBtn onClick={editClick} color={reduxTab}>
+                  수정
+                </St.DetailBtn>
+                <St.DetailBtn onClick={deleteClick} color={reduxTab}>
+                  삭제
+                </St.DetailBtn>
+              </St.DetailBtnWrap>
+            )
+          ) : null}
+        </St.DetailBox>
+      </St.DetailVh>
+    </St.DetailBg>
   );
 }
 

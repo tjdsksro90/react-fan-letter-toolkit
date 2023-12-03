@@ -1,0 +1,76 @@
+{
+  "lists": [
+    {
+      "id": 1,
+      "createdAt": "2023-11-03T02:07:09.423Z",
+      "nickname": "Thor Odinson",
+      "img": "img/image-thor.jpg",
+      "content": "Iron Main, Vitae recusandae tenetur debitis impedit.",
+      "writedTo": "iron",
+      "userId": "thor"
+    },
+    {
+      "id": 2,
+      "createdAt": "2023-11-02T23:13:18.491Z",
+      "nickname": "Hulk",
+      "img": "img/image-hulk.jpg",
+      "content": "I'm Hulk! Captain America!! Vitae recusandae tenetur debitis impedit.",
+      "writedTo": "cap",
+      "userId": "hulk"
+    },
+    {
+      "id": 3,
+      "createdAt": "2023-11-02T11:25:37.026Z",
+      "nickname": "James Buchanan Bucky Barnes",
+      "img": "img/image-bucky.jpg",
+      "content": "Captain, Vitae recusandae tenetur debitis impedit.",
+      "writedTo": "cap",
+      "userId": "bucky"
+    },
+    {
+      "id": 4,
+      "createdAt": "2023-11-02T16:06:34.150Z",
+      "nickname": "Virginia Pepper Potts",
+      "img": "img/image-pepper.jpg",
+      "content": "Tonny, I miss you. Vitae recusandae tenetur debitis impedit.",
+      "writedTo": "iron",
+      "userId": "pepper"
+    },
+    {
+      "id": 5,
+      "createdAt": "2023-11-03T05:40:17.575Z",
+      "nickname": "Spider Man",
+      "img": "img/image-spider.jpg",
+      "content": "Iron Main, Vitae recusandae tenetur debitis impedit.",
+      "writedTo": "iron",
+      "userId": "spider"
+    },
+    {
+      "createdAt": "2023-12-01T07:13:00.480Z",
+      "nickname": "1234",
+      "img": null,
+      "writedTo": "cap",
+      "content": "111222",
+      "userId": "tjdsksro90",
+      "id": 6
+    },
+    {
+      "createdAt": "2023-12-01T19:10:26.874Z",
+      "nickname": "501",
+      "img": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-01/b5d9a222-de0b-44ef-bd18-e998de0b5f10.jpg",
+      "writedTo": "cap",
+      "content": "111",
+      "userId": "tjdsksro",
+      "id": 7
+    },
+    {
+      "createdAt": "2023-12-01T20:22:40.030Z",
+      "nickname": "501",
+      "img": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-01/b5d9a222-de0b-44ef-bd18-e998de0b5f10.jpg",
+      "writedTo": "cap",
+      "content": "test66",
+      "userId": "tjdsksro",
+      "id": 8
+    }
+  ]
+}

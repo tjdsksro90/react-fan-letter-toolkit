@@ -14,7 +14,7 @@ export const red = {
   back: "#ffbbbb",
 };
 
-export const HeaderBg = styled.header`
+export const HeaderBg = styled.div`
   position: relative;
   background-image: url("/img/background.jpg");
   background-size: cover;
@@ -26,9 +26,36 @@ export const HeaderBg = styled.header`
   height: 500px;
 `;
 
-export const HeaderH1 = styled.h1`
+export const HeaderLink = styled.div`
   position: absolute;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background: #000;
+  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  > button {
+    font-size: 14px;
+    background-color: transparent;
+    color: #fff;
+    border: 0;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      font-weight: bold;
+    }
+  }
+`;
+
+export const HeaderH1 = styled.h1`
+  position: absolute;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 50px;
@@ -218,6 +245,9 @@ export const ListImgFigure = styled.figure`
   border-radius: 50%;
   background: #e1e1e1;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ListImg = styled.img`
@@ -281,7 +311,7 @@ export const DetailBg = styled.div`
 
 export const DetailHome = styled.span`
   position: absolute;
-  top: 0;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 50px;
@@ -313,6 +343,9 @@ export const DetailImg = styled.figure`
   margin: 0 auto;
   overflow: hidden;
   background: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export const DetailImg100 = styled.img`
   width: 100%;
@@ -368,5 +401,206 @@ export const DetailBtn = styled.button`
   &:active {
     background-color: ${(props) => props.color.light};
     color: #fff;
+  }
+`;
+
+//
+export const LoginContainer = styled.div`
+  background-color: #000;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const LoginBasicWrap = styled.main`
+  width: 420px;
+  max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const LoginFormWrap = styled.form`
+  margin-top: 20px;
+  background: #ccc;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  > h2 {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+  }
+`;
+export const LoginFormSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+export const LoginFormSpan = styled.span`
+  width: 100%;
+  display: flex;
+`;
+export const LoginFormInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+export const LoginFormButton = styled.button`
+  border: 0;
+  color: #fff;
+  /* background-color: ${(props) =>
+    props.line === "line" ? "#fff" : "#000"}; */
+  background-color: #000;
+  padding: 10px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:disabled {
+    opacity: 0.25;
+    cursor: auto;
+  }
+`;
+
+//
+
+export const MypageContainer = styled.div`
+  background-color: #000;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const MypageBasicWrap = styled.main`
+  width: 420px;
+  max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const MypageDivWrap = styled.div`
+  margin-top: 20px;
+  background: #ccc;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  > h2 {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+  }
+`;
+
+export const MypageBtnWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+export const MypageDivSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const MypageBtn = styled.button`
+  width: 75px;
+  height: 25px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  &:disabled {
+    opacity: 0.25;
+    cursor: auto;
+  }
+`;
+
+export const MypageDivSpan = styled.span`
+  width: 100%;
+  display: flex;
+  position: relative;
+`;
+export const MypageFormInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+export const MypageImg = styled.figure`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const MypageImg100 = styled.img`
+  width: 100%;
+`;
+export const MypageUserId = styled.span`
+  text-align: center;
+  color: #666;
+`;
+export const MypageUserName = styled.span`
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+`;
+export const MypageFormLabel = styled.label`
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+`;
+
+export const MypageFormFile = styled.input`
+  position: absolute;
+  width: 0;
+  height: 0;
+`;
+
+export const NomatchWrap = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #000;
+`;
+
+export const NomatchWrapH2 = styled.h2`
+  font-weight: bold;
+  font-size: 40px;
+  color: #ccc;
+`;
+
+export const NomatchWrapLink = styled.p`
+  > a {
+    color: #fff;
+    font-size: 20px;
+    &:hover {
+      color: #ccc;
+    }
   }
 `;

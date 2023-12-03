@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import { SearchSapn, SearchWrap } from "assets/BasicStyle";
+import * as St from "assets/BasicStyle";
 
 function Search({ search, searchHandler }) {
   return (
-    <SearchWrap>
-      <SearchSapn>
+    <St.SearchWrap>
+      <St.SearchSapn>
         <input
           type="text"
           placeholder="search name"
           value={search}
           onChange={searchHandler}
         />
-      </SearchSapn>
-    </SearchWrap>
+      </St.SearchSapn>
+    </St.SearchWrap>
   );
 }
 

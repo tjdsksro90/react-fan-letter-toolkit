@@ -1,10 +1,16 @@
-import { combineReducers, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import tab from "redux/modules/tab";
+import { configureStore } from "@reduxjs/toolkit";
+import tab from "redux/modules/tabSlice";
+import lists from "redux/modules/listSlice";
+import login from "redux/modules/authSlice";
+import loading from "redux/modules/loading";
 
-const rootReducer = combineReducers({
-  tab,
+const store = configureStore({
+  reducer: {
+    tab,
+    lists,
+    login,
+    loading,
+  },
 });
-const store = createStore(rootReducer, composeWithDevTools());
 
 export default store;
