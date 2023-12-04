@@ -17,8 +17,8 @@ export const __getLogin = createAsyncThunk(
     try {
       thunkAPI.dispatch(loadingState(true));
       const response = await api.post(
-        // "/login?expiresIn=1m",
-        "/login",
+        "/login?expiresIn=10m",
+        // "/login",
         {
           id: payload.id,
           password: payload.password,
@@ -95,7 +95,6 @@ export const __editUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     thunkAPI.dispatch(loadingState(true));
     let formData = new FormData();
-    console.log(payload.avatar, "--editUser.avatar--");
     formData.append("avatar", payload.avatar);
     formData.append("nickname", payload.nickname);
     try {
@@ -104,11 +103,9 @@ export const __editUser = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(payload, "payload payload payload payload ");
       thunkAPI.dispatch(loadingState(false));
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
-      console.log(err, "Error");
       thunkAPI.dispatch(loadingState(false));
       return thunkAPI.rejectWithValue(err);
     }
@@ -131,8 +128,6 @@ const loginSlice = createSlice({
     [__getUser.rejected]: (state, action) => {
       state.isLoading = false;
       state.isLogin = false;
-      // removeCookie("accessToken");
-      // toast.error("세션이 만료되어 자동 로그아웃합니다.");
       state.error = action.payload;
       action.payload.navigate("/login");
     },
@@ -154,8 +149,6 @@ const loginSlice = createSlice({
       state.avatar = action.payload.avatar;
       toast.success("로그인 성공!");
       setCookie("accessToken", action.payload.accessToken);
-
-      // return state;
     },
     // 회원가입
     [__getSignup.fulfilled]: (state, action) => {

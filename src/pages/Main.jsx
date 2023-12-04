@@ -18,7 +18,6 @@ function Main() {
   const tabHandler = (item) => {
     dispatch(__tabPatch(item));
     setTab(item);
-    console.log("여긴가");
   };
 
   return (

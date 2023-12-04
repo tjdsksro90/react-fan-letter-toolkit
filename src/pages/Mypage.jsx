@@ -33,9 +33,8 @@ function Mypage() {
 
   // 이미지 파일 선택하기
   const saveImgFile = (event) => {
-    console.log(event.target.files[0], "---------------");
+    console.log(event.target.files[0]);
     const file = imgRef.current.files[0];
-    console.log(file, "++++++++++++++++");
     if (imgRef.current.files[0] !== undefined) {
       if (imgRef.current.files[0].size > 1024 * 1024)
         return toast.error("이미지가 큽니다. 1MB가 넘지 않도록 해주세요");
@@ -81,7 +80,6 @@ function Mypage() {
         const userName = res.payload.nickname || user.nickname;
         // 리스트 정보들도 수정
         dispatch(__editUserList({ userId, userImg, userName }));
-        console.log(user, "user info");
         setEditCheck(false);
       });
     }

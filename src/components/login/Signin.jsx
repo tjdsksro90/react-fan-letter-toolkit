@@ -28,7 +28,6 @@ function SigninPage({ setLoginPage }) {
         password: loginForm.password,
       })
     ).then((res) => {
-      console.log(res);
       if (res.error) return;
       navigate("/");
     });

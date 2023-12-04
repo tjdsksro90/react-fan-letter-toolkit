@@ -37,7 +37,6 @@ function Form({ tab }) {
   const submitHandler = (e) => {
     e.preventDefault();
     const today = new Date();
-    console.log(list);
     dispatch(
       __addList({
         createdAt: today.toJSON(),
@@ -53,8 +52,6 @@ function Form({ tab }) {
   // 유저 정보 가져오기
   useEffect(() => {
     dispatch(__getUser({ navigate })).then((res) => {
-      console.log(res, "<<<<<<<<<<<<<<<<<<<");
-      // if (res.type === "getUser/rejected") navigate("/login");
       setList({
         ...list,
         nickname: res.payload.nickname,

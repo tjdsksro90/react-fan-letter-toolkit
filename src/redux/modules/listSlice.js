@@ -126,7 +126,6 @@ export const __editUserList = createAsyncThunk(
         }
       });
 
-      // Wait for all updates to complete
       await Promise.all(updatePromises);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
@@ -232,12 +231,11 @@ export const listsSlice = createSlice({
       state.detail.content = action.payload.content;
       toast.success("리스트 수정 성공!");
     },
-    // 리스트 수정
+    // 유저 프로필 수정시 게시물도 모두 수정
     [__editUserList.fulfilled]: (state, action) => {
       console.log("fulfiled __editUserList : ", action);
       state.isLoading = false;
       state.isError = false;
-      // state.detail.content = action.payload.content;
       return state;
     },
   },

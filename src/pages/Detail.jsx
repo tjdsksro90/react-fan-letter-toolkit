@@ -19,13 +19,6 @@ function Detail() {
   const navigate = useNavigate();
   const param = useParams();
 
-  // const [detail, setDetail] = useState("");
-  // const [userDetail, setUserDetail] = useState("");
-
-  // useEffect(() => {
-  //   dispatch(__getDetailList(param.id));
-  // }, []);
-
   useEffect(() => {
     dispatch(__getUser({ navigate }));
     dispatch(__getDetailList(param.id));
@@ -37,13 +30,6 @@ function Detail() {
   const userDetail = useSelector((state) => {
     return state.login;
   });
-
-  // useEffect(() => {
-  // if (detail.length <= 0 || detail.length > 1) {
-  //   alert("올바르지 않은 접근입니다. 메인페이지로 이동합니다.");
-  //   navigate("/");
-  // }
-  // }, [detail]);
 
   const [editCheck, setEditCheck] = useState(false);
   const [desc, setDesc] = useState("");
@@ -80,8 +66,6 @@ function Detail() {
   const checkIfIncludes = () => {
     return detail.img && detail.img.includes("img/");
   };
-
-  // const result = detail.img?.property?.contains("img/");
 
   return (
     <St.DetailBg color={reduxTab}>
