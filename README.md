@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+# 리액트 팬레터 페이지
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+기존 redux 작업 된 페이지를 새로운 기능들을 추가하고 react-toolkik을 활용해 전부 react-thunk로 리팩토링 작업
 
-## Available Scripts
+## 실행법
 
-In the project directory, you can run:
+이 프로젝트를 실행하기 위해선 아래 명령어 사용
 
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+## 새롭게 추가 된 기능
+- 회원가입, 로그인 화면 추가
+  - universal-cookie 모듈을 활용해 쿠키로 계정정보 저장활용
+  - 로그인 후에도 계속해서 로그인 상태 유지
+- 기존 Router 작업 위에 접근자헨 Outlet 사용
+  - 메인도 로그인이 되어야만 접근하게 작업
+- 상세화면 수정
+  - 본인 계정만 수정삭제 할 수 있도록 수정
+- 글 작성
+  - 본인 닉네임을 자동으로 들어가게끔 수정
+- json-server를 통해 db에 데이터 저장
+- 프로필 페이지 추가
+  - 회원정보 수정 페이지
+  - 회원정보 수정하면 게시물들의 내용들도 업데이트
+- 팝업창 대신 toast 팝업 사용
