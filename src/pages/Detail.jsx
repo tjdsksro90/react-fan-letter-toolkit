@@ -19,28 +19,24 @@ function Detail() {
   const navigate = useNavigate();
   const param = useParams();
 
-  // const { detail = "" } = useSelector((state) => {
-  //   return state.lists;
-  // });
-  const [detail, setDetail] = useState("");
-  const [userDetail, setUserDetail] = useState("");
+  // const [detail, setDetail] = useState("");
+  // const [userDetail, setUserDetail] = useState("");
 
   // useEffect(() => {
   //   dispatch(__getDetailList(param.id));
   // }, []);
 
   useEffect(() => {
-    dispatch(__getUser({ navigate })).then((res) => {
-      console.log(res, "<<<<<<<<<<<<<<<<<<<");
-      setUserDetail(res.payload);
-    });
+    dispatch(__getUser({ navigate }));
+    dispatch(__getDetailList(param.id));
   }, []);
 
-  useEffect(() => {
-    dispatch(__getDetailList(param.id)).then((res) => {
-      setDetail(res.payload);
-    });
-  }, []);
+  const { detail = "" } = useSelector((state) => {
+    return state.lists;
+  });
+  const userDetail = useSelector((state) => {
+    return state.login;
+  });
 
   // useEffect(() => {
   // if (detail.length <= 0 || detail.length > 1) {

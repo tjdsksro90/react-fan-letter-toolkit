@@ -8,11 +8,13 @@ import Layout from "shared/Layout";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import NoMatch from "pages/NoMatch";
+import Loading from "components/loding/Loading";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
+      <Loading />
       <Layout>
         <Routes>
           <Route element={<PrivateRoute />}>

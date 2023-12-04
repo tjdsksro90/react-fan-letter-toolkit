@@ -604,3 +604,28 @@ export const NomatchWrapLink = styled.p`
     }
   }
 `;
+
+export const SpinnerStyle = styled.div`
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  > p {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+  }
+  > div {
+    position: fixed;
+    z-index: 1002;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+`;

@@ -4,15 +4,15 @@ import Header from "components/Header";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { __editUser, __getUser } from "redux/modules/authSlice";
 import { __editUserList } from "redux/modules/listSlice";
 
 function Mypage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
-    nickname: "",
-    avatar: null,
-    id: "",
+
+  const user = useSelector((state) => {
+    return state.login;
   });
   const [editUser, setEditUser] = useState({
     nickname: "",
@@ -25,14 +25,7 @@ function Mypage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(__getUser({ navigate })).then((res) => {
-      setUser({
-        ...user,
-        id: res.payload.id,
-        nickname: res.payload.nickname,
-        avatar: res.payload.avatar,
-      });
-    });
+    dispatch(__getUser({ navigate }));
   }, []);
 
   const isEditValid =
@@ -43,15 +36,19 @@ function Mypage() {
     console.log(event.target.files[0], "---------------");
     const file = imgRef.current.files[0];
     console.log(file, "++++++++++++++++");
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImgFile(reader.result);
-      setEditUser({
-        ...editUser,
-        avatar: imgRef.current.files[0],
-      });
-    };
+    if (imgRef.current.files[0] !== undefined) {
+      if (imgRef.current.files[0].size > 1024 * 1024)
+        return toast.error("이미지가 큽니다. 1MB가 넘지 않도록 해주세요");
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImgFile(reader.result);
+        setEditUser({
+          ...editUser,
+          avatar: imgRef.current.files[0],
+        });
+      };
+    }
   };
 
   const editClick = () => {
@@ -78,28 +75,15 @@ function Mypage() {
     if (editUser.nickname === user.nickname && editUser.avatar === null)
       return alert("수정된 부분이 없습니다");
     if (window.confirm("이대로 수정하시겠습니까?")) {
-      // console.log(formData);
       dispatch(__editUser(editUser)).then((res) => {
-        setUser({
-          ...user,
-          nickname: res.payload.nickname || user.nickname,
-          avatar: res.payload.avatar || user.avatar,
-        });
-
         const userId = user.id;
-        const userImg = res.payload.avatar
-          ? res.payload.avatar
-          : user.avatar === null
-          ? "img-icon-cap.png"
-          : user.avatar;
-        const userName = res.payload.nickname
-          ? res.payload.nickname
-          : user.nickname;
+        const userImg = res.payload.avatar || user.avatar;
+        const userName = res.payload.nickname || user.nickname;
         // 리스트 정보들도 수정
         dispatch(__editUserList({ userId, userImg, userName }));
         console.log(user, "user info");
+        setEditCheck(false);
       });
-      setEditCheck(false);
     }
   };
 
@@ -161,7 +145,9 @@ function Mypage() {
                   {user.avatar === null ? (
                     <St.MypageImg100 src="../img/img-icon-cap.png" alt="img" />
                   ) : (
-                    <St.MypageImg100 src={user.avatar} alt="img" />
+                    <span>
+                      <St.MypageImg100 src={user.avatar} alt="img" />
+                    </span>
                   )}
                 </St.MypageImg>
                 <St.MypageUserName>{user.nickname}</St.MypageUserName>

@@ -56,17 +56,17 @@
     },
     {
       "createdAt": "2023-12-01T19:10:26.874Z",
-      "nickname": "501",
-      "img": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-01/b5d9a222-de0b-44ef-bd18-e998de0b5f10.jpg",
+      "nickname": "509",
+      "img": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-03/d554394b-e9c3-4034-bf3c-c6de719b63de.jpg",
       "writedTo": "cap",
-      "content": "111",
+      "content": "1112",
       "userId": "tjdsksro",
       "id": 7
     },
     {
       "createdAt": "2023-12-01T20:22:40.030Z",
-      "nickname": "501",
-      "img": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-01/b5d9a222-de0b-44ef-bd18-e998de0b5f10.jpg",
+      "nickname": "509",
+      "img": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-03/d554394b-e9c3-4034-bf3c-c6de719b63de.jpg",
       "writedTo": "cap",
       "content": "test66",
       "userId": "tjdsksro",

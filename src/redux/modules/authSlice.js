@@ -15,6 +15,7 @@ export const __getLogin = createAsyncThunk(
   "getLogin",
   async (payload, thunkAPI) => {
     try {
+      thunkAPI.dispatch(loadingState(true));
       const response = await api.post(
         // "/login?expiresIn=1m",
         "/login",
@@ -28,9 +29,11 @@ export const __getLogin = createAsyncThunk(
           },
         }
       );
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log(err, "Error");
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -40,6 +43,7 @@ export const __getSignup = createAsyncThunk(
   "getSignup",
   async (payload, thunkAPI) => {
     try {
+      thunkAPI.dispatch(loadingState(true));
       const response = await api.post(
         "/register",
         {
@@ -53,9 +57,11 @@ export const __getSignup = createAsyncThunk(
           },
         }
       );
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log(err, "Error");
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -65,14 +71,17 @@ export const __getUser = createAsyncThunk(
   "getUser",
   async (payload, thunkAPI) => {
     try {
+      thunkAPI.dispatch(loadingState(true));
       const response = await api.get("/user", {
         headers: {
           "Content-type": "application/json",
         },
       });
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log(err, "Error");
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.rejectWithValue({
         err,
         navigate: payload.navigate,
@@ -84,6 +93,7 @@ export const __getUser = createAsyncThunk(
 export const __editUser = createAsyncThunk(
   "editUser",
   async (payload, thunkAPI) => {
+    thunkAPI.dispatch(loadingState(true));
     let formData = new FormData();
     console.log(payload.avatar, "--editUser.avatar--");
     formData.append("avatar", payload.avatar);
@@ -95,9 +105,11 @@ export const __editUser = createAsyncThunk(
         },
       });
       console.log(payload, "payload payload payload payload ");
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log(err, "Error");
+      thunkAPI.dispatch(loadingState(false));
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -157,6 +169,7 @@ const loginSlice = createSlice({
       console.log("fulfiled userInfo: ", action);
       state.isLoading = false;
       state.isLogin = true;
+      state.id = action.payload.id;
       state.nickname = action.payload.nickname;
       state.avatar = action.payload.avatar;
       return state;
@@ -167,7 +180,8 @@ const loginSlice = createSlice({
       state.isLoading = false;
       state.isLogin = true;
       state.nickname = action.payload.nickname;
-      state.avatar = action.payload.avatar;
+      if (action.payload.avatar !== undefined)
+        state.avatar = action.payload.avatar;
       return state;
     },
   },
